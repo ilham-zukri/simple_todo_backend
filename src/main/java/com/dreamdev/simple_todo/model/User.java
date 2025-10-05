@@ -1,5 +1,6 @@
 package com.dreamdev.simple_todo.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -21,9 +22,25 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    private String firstName;
+    private String lastName;
+    private Integer role;
+    
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private LocalDateTime updatedAt;
     
     // Getters and Setters
-
+    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
     public UUID getId() {
         return id;
     }
@@ -40,5 +57,24 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public Integer getRole() {
+        return role;
+    }
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
 
 }

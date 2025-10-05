@@ -17,7 +17,6 @@ public class GloobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleDuplicateData(DataIntegrityViolationException ex) {
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDateTime.now());
-        response.put("status", HttpStatus.CONFLICT.value());
         if (ex.getMessage().contains("username")) {
             response.put("message", "Username already exists.");
         } else if (ex.getMessage().contains("email")) {
@@ -26,6 +25,14 @@ public class GloobalExceptionHandler {
             response.put("message", "Duplicate data detected.");
         }
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("timestamp", LocalDateTime.now());
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
