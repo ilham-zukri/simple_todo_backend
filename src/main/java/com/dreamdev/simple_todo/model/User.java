@@ -23,6 +23,10 @@ public class User {
     private String email;
     
     // Getters and Setters
+
+    public UUID getId() {
+        return id;
+    }
     public String getUsername() {
         return username;
     }
