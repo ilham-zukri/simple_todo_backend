@@ -1,11 +1,15 @@
 package com.dreamdev.simple_todo.service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.springframework.stereotype.Service;
 
 import com.dreamdev.simple_todo.model.User;
 import com.dreamdev.simple_todo.repository.UserRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
@@ -24,7 +28,26 @@ public class UserService {
     }
 
     public void deleteByUsername(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
         userRepository.delete(user);
+    }
+
+    private void updateIfPresent(String value, Consumer<String> setter) {
+        Optional.ofNullable(value).filter(s -> !s.isBlank()).ifPresent(setter);
+    }
+
+    public void updateUser(User updatedUser) {
+        User existingUser = userRepository.findByUsername(updatedUser.getUsername())
+                .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
+
+        updateIfPresent(updatedUser.getUsername(), existingUser::setUsername);
+        updateIfPresent(updatedUser.getEmail(), existingUser::setEmail);
+        updateIfPresent(updatedUser.getFirstName(), existingUser::setFirstName);
+        updateIfPresent(updatedUser.getLastName(), existingUser::setLastName);
+        Optional.ofNullable(updatedUser.getRole()).ifPresent(existingUser::setRole);
+
+
+        userRepository.save(existingUser);
     }
 }

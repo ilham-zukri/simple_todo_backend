@@ -32,5 +32,12 @@ public class UserController {
         userService.deleteByUsername(username);
         return ResponseEntity.ok(Map.of("message", "User deleted successfully"));
     }
+
+    @PutMapping
+    public ResponseEntity<Map<String, String>> updateUser(@RequestBody User user){
+        userService.updateUser(user);
+
+        return ResponseEntity.ok(Map.of("Message", "User Updated successfully"));
+    } 
     
 }
