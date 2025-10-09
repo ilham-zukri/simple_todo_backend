@@ -20,16 +20,19 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false)
+    private String password;
+
     @Column(nullable = false, unique = true)
     private String email;
-
+    
     private String firstName;
     private String lastName;
-    private Integer role;
+    private Integer role = 0;
     
     @Column(name = "created_at", updatable = false, insertable = false)
     private LocalDateTime createdAt;
-
+    
     @Column(name = "created_at", updatable = false, insertable = false)
     private LocalDateTime updatedAt;
     
@@ -47,10 +50,15 @@ public class User {
     public String getUsername() {
         return username;
     }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
     public void setUsername(String username) {
         this.username = username;
     }
-    
     public String getEmail() {
         return email;
     }

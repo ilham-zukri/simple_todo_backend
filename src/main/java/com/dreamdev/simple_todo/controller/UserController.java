@@ -37,7 +37,7 @@ public class UserController {
     public ResponseEntity<Map<String, String>> updateUser(@RequestBody User user){
         userService.updateUser(user);
 
-        return ResponseEntity.ok(Map.of("Message", "User Updated successfully"));
+        return ResponseEntity.ok(Map.of("message", "User Updated successfully"));
     } 
     
 }
