@@ -2,6 +2,8 @@ package com.dreamdev.simple_todo.controller;
 
 import com.dreamdev.simple_todo.model.User;
 import com.dreamdev.simple_todo.service.UserService;
+
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -22,8 +24,10 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user){
+        User savedUser = userService.createUser(user);
+
+        return ResponseEntity.ok(savedUser);
     }
 
     @DeleteMapping
